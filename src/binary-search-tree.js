@@ -13,11 +13,7 @@ class BinarySearchTree {
 
   root() {
     
-    if (!this.rootNode) {
-      return null;
-    } else {
-      return this.rootNode;
-    }
+    return this.rootNode;
   }
 
   add(data) {
@@ -99,25 +95,39 @@ class BinarySearchTree {
     return null;
   }
 
-  remove(/* data */) {
+  remove(/*data*/) {
     throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+    let current = this.rootNode;
+
+    while (current) {
+
+      if (!current.leftChild) {
+        return current.data;
+      }
+      else {
+        current = current.leftChild;
+      }
+    }
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    
+    let current = this.rootNode;
+
+    while (current) {
+
+      if (!current.rightChild) {
+        return current.data;
+      }
+      current = current.rightChild;
+    }
   }
 }
-
-let tree = new BinarySearchTree;
-
-console.log(tree);
 
 module.exports = {
   BinarySearchTree
