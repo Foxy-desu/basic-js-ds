@@ -7,25 +7,96 @@ const { NotImplementedError } = require('../extensions/index.js');
 * using Node from extensions
 */
 class BinarySearchTree {
+  constructor() {
+    this.rootNode = null;
+  }
 
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    
+    if (!this.rootNode) {
+      return null;
+    } else {
+      return this.rootNode;
+    }
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add(data) {
+
+    let node = {
+      data: data,
+      leftChild: null,
+      rightChild: null,
+    }
+
+    if (!this.rootNode) {
+      this.rootNode = node;
+      return;
+    }
+
+    let currentNode = this.rootNode;
+
+    while(true) {
+      if(data > currentNode.data) {
+        if(!currentNode.rightChild) {
+          currentNode.rightChild = node;
+          return; 
+        }
+        currentNode = currentNode.rightChild;
+      }
+
+      else if (data < currentNode.data) {
+        if(!currentNode.leftChild) {
+          currentNode.leftChild = node;
+          return; 
+        }
+        currentNode = currentNode.leftChild;
+      }
+      
+      else break;
+
+    }
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has(data) {
+    
+    let current = this.rootNode;
+
+    while(current) {
+
+      if(data > current.data) {
+        current = current.rightChild;
+      }
+
+      else if(data < current.data) {
+        current = current.leftChild;
+      }
+
+      else {
+        return true
+      }
+    }
+
+    return false;
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    
+    let current = this.rootNode;
+    
+    while(current) {
+
+      if(data > current.data) {
+        current = current.rightChild;
+      }
+
+      else if(data < current.data) {
+        current = current.leftChild;
+      }
+
+      else return current;
+    }
+
+    return null;
   }
 
   remove(/* data */) {
@@ -43,6 +114,10 @@ class BinarySearchTree {
     // remove line with error and write your code here
   }
 }
+
+let tree = new BinarySearchTree;
+
+console.log(tree);
 
 module.exports = {
   BinarySearchTree
