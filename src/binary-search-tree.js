@@ -95,10 +95,37 @@ class BinarySearchTree {
     return null;
   }
 
-  remove(/*data*/) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+  let targetNode = this.find(data);
+
+  if(targetNode === null) {
+    return null;
   }
+
+  if (targetNode.leftChild === null && targetNode.rightChild === null) {
+    return targetNode = null;
+  }
+
+  if (targetNode.leftChild) {
+    if(!targetNode.rightChild) {
+      return targetNode = targetNode.leftChild;
+    }
+  }
+
+  if (targetNode.rightChild) {
+    if (!targetNode.leftChild) {
+      return targetNode = targetNode.rightChild;
+    }
+  }
+
+  if (targetNode.leftChild && targetNode.rightChild) {
+    let left = targetNode.leftChild;
+    targetNode = targetNode.rightChild;
+    targetNode.leftChild = left;
+    return targetNode;
+  }
+}
+
 
   min() {
 
