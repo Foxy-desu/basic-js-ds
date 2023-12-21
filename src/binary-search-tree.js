@@ -12,7 +12,7 @@ class BinarySearchTree {
   }
 
   root() {
-    
+
     return this.rootNode;
   }
 
@@ -31,43 +31,43 @@ class BinarySearchTree {
 
     let currentNode = this.rootNode;
 
-    while(true) {
-      if(data > currentNode.data) {
-        if(!currentNode.rightChild) {
+    while (true) {
+      if (data > currentNode.data) {
+        if (!currentNode.rightChild) {
           currentNode.rightChild = node;
-          return; 
+          return;
         }
         currentNode = currentNode.rightChild;
       }
 
       else if (data < currentNode.data) {
-        if(!currentNode.leftChild) {
+        if (!currentNode.leftChild) {
           currentNode.leftChild = node;
-          return; 
+          return;
         }
         currentNode = currentNode.leftChild;
       }
-      
+
       else break;
 
     }
   }
 
   has(data) {
-    
+
     let current = this.rootNode;
 
-    while(current) {
+    while (current) {
 
-      if(data > current.data) {
+      if (data > current.data) {
         current = current.rightChild;
       }
 
-      else if(data < current.data) {
+      else if (data < current.data) {
         current = current.leftChild;
       }
 
-      else {
+      else if (data === current.data) {
         return true
       }
     }
@@ -76,16 +76,16 @@ class BinarySearchTree {
   }
 
   find(data) {
-    
-    let current = this.rootNode;
-    
-    while(current) {
 
-      if(data > current.data) {
+    let current = this.rootNode;
+
+    while (current) {
+
+      if (data > current.data) {
         current = current.rightChild;
       }
 
-      else if(data < current.data) {
+      else if (data < current.data) {
         current = current.leftChild;
       }
 
@@ -95,65 +95,106 @@ class BinarySearchTree {
     return null;
   }
 
+  min(data = this.rootNode) {
+
+      let current = data;
+
+      while (current) {
+          
+          if(!current.leftChild) {
+              return current.data;
+          }
+          current = current.leftChild;
+      }
+  }
+
+  max(data = this.rootNode) {
+    
+      let current = data;
+
+      while (current) {
+          
+          if(!current.rightChild) {
+              return current.data;
+          }
+          current = current.rightChild;
+      }
+  }
+
   remove(data) {
-  let targetNode = this.find(data);
 
-  if(targetNode === null) {
-    return null;
+      if(this.rootNode === null) return null;
+
+      this.rootNode = this._deleteNode(this.rootNode, data);
   }
 
-  if (targetNode.leftChild === null && targetNode.rightChild === null) {
-    return targetNode = null;
+  _deleteNode(currentNode, itemValue) {
+      if(currentNode.data === itemValue) {
+          if(currentNode.leftChild === null && currentNode.rightChild === null) {
+              return null;
+          }
+
+          if(currentNode.leftChild === null) {
+              return currentNode.rightChild;
+          }
+
+          if(currentNode.rightChild === null){
+              return currentNode.leftChild;
+          }
+
+          const minNodeInRightSubtree = this._min(currentNode.rightChild);
+          currentNode.data = minNodeInRightSubtree.data;
+
+          currentNode.rightChild = this._deleteNode(currentNode.rightChild, minNodeInRightSubtree.data);
+          return currentNode;
+      }
+
+      if(itemValue < currentNode.data) {
+          if(currentNode.leftChild === null) {
+              return currentNode
+          }
+
+          currentNode.leftChild = this._deleteNode(currentNode.leftChild, itemValue);
+          return currentNode;
+      }
+
+      if(itemValue > currentNode.data) {
+          if(currentNode.rightChild === null) {
+              return currentNode
+          }
+
+          currentNode.rightChild = this._deleteNode(currentNode.rightChild, itemValue);
+          return currentNode;
+      }
+
+    
   }
 
-  if (targetNode.leftChild) {
-    if(!targetNode.rightChild) {
-      return targetNode = targetNode.leftChild;
+  _min(data = this.rootNode) {
+
+    let current = data;
+
+    while (current) {
+        
+        if(!current.leftChild) {
+            return current;
+        }
+        current = current.leftChild;
     }
-  }
-
-  if (targetNode.rightChild) {
-    if (!targetNode.leftChild) {
-      return targetNode = targetNode.rightChild;
-    }
-  }
-
-  if (targetNode.leftChild && targetNode.rightChild) {
-    let left = targetNode.leftChild;
-    targetNode = targetNode.rightChild;
-    targetNode.leftChild = left;
-    return targetNode;
-  }
 }
 
-
-  min() {
-
-    let current = this.rootNode;
-
-    while (current) {
-
-      if (!current.leftChild) {
-        return current.data;
-      }
-      else {
-        current = current.leftChild;
-      }
-    }
-  }
-
-  max() {
-    
-    let current = this.rootNode;
+  _max(data = this.rootNode) {
+  
+    let current = data;
 
     while (current) {
-
-      if (!current.rightChild) {
-        return current.data;
-      }
-      current = current.rightChild;
+        
+        if(!current.rightChild) {
+            return current;
+        }
+        current = current.rightChild;
     }
-  }
+}
 }
 
 module.exports = {
